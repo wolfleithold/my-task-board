@@ -16,4 +16,4 @@ Please refer to the LICENSE in the repo.
 
 ## Screenshot
 
-![screenshot](<Screenshot 2024-06-03 162039.png>)
+![screenshot](Screenshot-task-bar.png)
