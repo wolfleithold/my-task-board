@@ -12,16 +12,19 @@ function generateTaskId() {
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
-
+    return `
+    <div class="task-card card mb-3" data-id="${task.id}">
+        <div class="card-body">
+            <h5 class="card-title">${task.title}</h5>
+            <p class="card-text">${task.dueDate}</p>
+            <button class="btn btn-danger delete-task" onclick="handleDeleteTask(event)">Delete</button>
+        </div>
+    </div>
+`;
 }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-
-}
-
-// Todo: create a function to handle adding a new task
-function handleAddTask(event){
     let todoContainer = $('#todo-cards');
     let inProgressContainer = $('#in-progress-cards');
     let doneContainer = $('#done-cards');
@@ -29,6 +32,11 @@ function handleAddTask(event){
     todoContainer.empty();
     inProgressContainer.empty();
     doneContainer.empty();
+}
+
+// Todo: create a function to handle adding a new task
+function handleAddTask(event){
+  
 }
 
 // Todo: create a function to handle deleting a task
