@@ -6,12 +6,15 @@ let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
 function generateTaskId() {
     let id = nextId;
     nextId++;
+    //update the nextId in local storage to reflect the new value
     localStorage.setItem("nextId", JSON.stringify(nextId));
+    //return the current id for the task
     return id;
 }
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
+    //returns a string with HTML for the task card
     return `
         <div class="task-card card mb-3" data-id="${task.id}">
             <div class="card-body">
@@ -25,6 +28,7 @@ function createTaskCard(task) {
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
+    //these select the containers for tasks in their respective status
     let todoContainer = $('#todo-cards');
     let inProgressContainer = $('#in-progress-cards');
     let doneContainer = $('#done-cards');
@@ -32,7 +36,7 @@ function renderTaskList() {
     todoContainer.empty();
     inProgressContainer.empty();
     doneContainer.empty();
-    
+    //updates the status of the dropped task in the tasklist array
     taskList.forEach(task => {
         let taskCard = createTaskCard(task);
         if (task.status === 'todo') {
@@ -58,21 +62,27 @@ function renderTaskList() {
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
     event.preventDefault();
+    //grabs task title and due date from the html form inputs
     let title = $('#task-title').val();
     let dueDate = $('#task-due-date').val();
+    
+    //checks if either of them are empty
     if (!title || !dueDate) {
+        //if empty, then display this
         alert("Please provide a task title and due date.");
         return;
     }
 
+    //creates a new task
     let newTask = {
         id: generateTaskId(),
         title: title,
         dueDate: dueDate,
         status: 'todo'
     };
-
+    //adds the new task to the tasklist array
     taskList.push(newTask);
+    //allows the tasks to be stored in local storage
     localStorage.setItem("tasks", JSON.stringify(taskList));
     renderTaskList();
     $('#formModal').modal('hide');
@@ -80,9 +90,11 @@ function handleAddTask(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
+   //this will find the closest task card element
     let taskCard = $(event.target).closest('.task-card');
+    //this will get the task ID from the data-ID attribute
     let taskId = parseInt(taskCard.data('id'));
-    
+    //filters the task with its matching ID
     taskList = taskList.filter(task => task.id !== taskId);
     localStorage.setItem("tasks", JSON.stringify(taskList));
     renderTaskList();
@@ -90,15 +102,20 @@ function handleDeleteTask(event){
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
+    //extracts the task id from the dropped task card
     let taskId = parseInt(ui.draggable.data('id'));
+    //determines new status based on the lane where you drop the task
     let newStatus = $(event.target).closest('.lane').attr('id').replace('-cards', '');
     
+    //updates the status of the now dropped task in the array
     taskList = taskList.map(task => {
         if (task.id === taskId) {
             task.status = newStatus;
         }
         return task;
     });
+
+    //updates tasklist in the local storage
     localStorage.setItem("tasks", JSON.stringify(taskList));
     renderTaskList();
 }
@@ -107,7 +124,7 @@ function handleDrop(event, ui) {
 $(document).ready(function () {
     renderTaskList();
 
-    // Make lanes droppable
+    //makes lanes droppable
     $('.lane').droppable({
         accept: '.task-card',
         drop: function(event, ui) {
@@ -115,9 +132,9 @@ $(document).ready(function () {
         }
     });
 
-    // Initialize date picker for due date field
+    //initializes date picker for due date field
     $('#task-due-date').datepicker();
 
-    // Add event listener for adding a new task
+    //adds event listener for adding a new task
     $('#add-task-form').submit(handleAddTask);
 });
