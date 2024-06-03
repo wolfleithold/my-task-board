@@ -1,4 +1,4 @@
-## Task Board
+# Task Board
 
 ## Description
 
@@ -10,10 +10,12 @@ Wolfgang Leithold
 
 ## Link
 
+https://wolfleithold.github.io/my-task-board/
+
 ## License
 
 Please refer to the LICENSE in the repo.
 
 ## Screenshot
 
-![screenshot](Screenshot-task-bar.png)
+![screenshot](./assets/imgs/Screenshot-task-bar.png)
