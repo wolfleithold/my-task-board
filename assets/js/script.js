@@ -14,9 +14,23 @@ function generateTaskId() {
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
+   //this will color code the tasks depending on their due dates
+    let today = new Date();
+    let dueDate = new Date(task.dueDate);
+
+    let timeDifference = dueDate.getTime() - today.getTime();
+    let daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+    let cardColorClass = '';
+    if (daysDifference < 0) {
+        cardColorClass = 'text-late'; //task is overdue
+    } else if (daysDifference <= 7) {
+        cardColorClass = 'text-warning'; //nearing deadline
+    }
+
     //returns a string with HTML for the task card
     return `
-        <div class="task-card card mb-3" data-id="${task.id}">
+    <div class="task-card card mb-3 ${cardColorClass}" data-id="${task.id}">
             <div class="card-body">
                 <h5 class="card-title">${task.title}</h5>
                 <p class="card-text">${task.description}</p>

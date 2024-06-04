@@ -9,9 +9,17 @@ body {
   
   .task-card {
     margin: 0 auto;
+    color: black !important;
   }
   
   .task-card:hover {
     cursor: grab;
   }
-  
+
+  .text-late {
+  background-color: #e96a6a; 
+  }
+
+  .text-warning {
+  background-color: #e8eb6b; 
+  }
