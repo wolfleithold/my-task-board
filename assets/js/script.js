@@ -40,6 +40,28 @@ function createTaskCard(task) {
          </div>
     `;
 }
+//added another function to apply and remove color-coding
+function applyColorCoding() {
+    taskList.forEach(task => {
+        let taskCard = $(`[data-id="${task.id}"]`);
+        if (task.status === 'done') {
+            //removes color-coded classes for tasks in "done" array
+            taskCard.removeClass('text-late text-warning');
+        } else {
+            let today = new Date();
+            let dueDate = new Date(task.dueDate);
+            let timeDifference = dueDate.getTime() - today.getTime();
+            let daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+            if (daysDifference < 0) {
+                taskCard.removeClass('text-warning').addClass('text-late'); //overdue
+            } else if (daysDifference <= 7) {
+                taskCard.removeClass('text-late').addClass('text-warning'); //nearing the deadline
+            } else {
+                taskCard.removeClass('text-late text-warning'); //plenty of time
+            }
+        }
+    });
+}
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
@@ -72,6 +94,8 @@ function renderTaskList() {
              $(this).removeClass('dragging');
          }
     });
+
+    applyColorCoding();
 }
 
 // Todo: create a function to handle adding a new task
