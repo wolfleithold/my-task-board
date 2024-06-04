@@ -51,7 +51,7 @@ function applyColorCoding() {
             let today = new Date();
             let dueDate = new Date(task.dueDate);
             let timeDifference = dueDate.getTime() - today.getTime();
-            let daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+            let daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24)); //this will actively track the task in real time! so cool
             if (daysDifference < 0) {
                 taskCard.removeClass('text-warning').addClass('text-late'); //overdue
             } else if (daysDifference <= 7) {
@@ -100,7 +100,6 @@ function renderTaskList() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
-    event.preventDefault();
     //grabs task title and due date from the html form inputs
     let title = $('#task-title').val();
     let description = $('#task-description').val();
