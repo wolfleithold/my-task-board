@@ -19,6 +19,7 @@ function createTaskCard(task) {
         <div class="task-card card mb-3" data-id="${task.id}">
             <div class="card-body">
                 <h5 class="card-title">${task.title}</h5>
+                <p class="card-text">${task.description}</p>
                 <p class="card-text">${task.dueDate}</p>
                 <button class="btn btn-danger delete-task" onclick="handleDeleteTask(event)">Delete</button>
             </div>
@@ -64,6 +65,7 @@ function handleAddTask(event){
     event.preventDefault();
     //grabs task title and due date from the html form inputs
     let title = $('#task-title').val();
+    let description = $('#task-description').val();
     let dueDate = $('#task-due-date').val();
     
     //checks if either of them are empty
@@ -77,6 +79,7 @@ function handleAddTask(event){
     let newTask = {
         id: generateTaskId(),
         title: title,
+        description: description,
         dueDate: dueDate,
         status: 'todo'
     };
